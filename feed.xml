@@ -3,7 +3,7 @@
     <title>BrainDump.exe</title>
     <link href="https://harrylovescode.github.io/feed.xml" rel="self" />
     <link href="https://harrylovescode.github.io" />
-    <updated>2021-10-17T14:00:38-04:00</updated>
+    <updated>2021-10-17T14:09:30-04:00</updated>
     <author>
         <name>Harry Gould</name>
     </author>
@@ -17,7 +17,7 @@
         <link href="https://harrylovescode.github.io/gxepd2-with-inland-e-ink-display-154-model/"/>
         <id>https://harrylovescode.github.io/gxepd2-with-inland-e-ink-display-154-model/</id>
 
-        <updated>2021-10-17T14:00:38-04:00</updated>
+        <updated>2021-10-17T14:09:30-04:00</updated>
             <summary>
                 <![CDATA[
                     Today, I wanted to post a brief article to address some confusion I had when setting up my new Inland E-Ink Display. The&hellip;
@@ -67,7 +67,7 @@
 <p>I <strong>highly</strong> recommend using this tool if you plan on displaying images on the e-ink display: <a href="I recommend using: https:/javl.github.io/image2cpp/" target="_blank" rel="noopener noreferrer">image2cpp</a>.</p>
 <div>
 <ul>
-<li> Images need to have their resolution set precisely.</li>
+<li>Images need to have their resolution set precisely.</li>
 <li>Background-color should be set to "black"</li>
 <li>Images should be inverted.</li>
 </ul>
