@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>BrainDump.exe</title>
+    <link href="https://harrylovescode.github.io/feed.xml" rel="self" />
+    <link href="https://harrylovescode.github.io" />
+    <updated>2021-10-17T14:00:38-04:00</updated>
+    <author>
+        <name>Harry Gould</name>
+    </author>
+    <id>https://harrylovescode.github.io</id>
+
+    <entry>
+        <title>GxEPD2 with Inland E-Ink Display (1.54&quot; Model)</title>
+        <author>
+            <name>Harry Gould</name>
+        </author>
+        <link href="https://harrylovescode.github.io/gxepd2-with-inland-e-ink-display-154-model/"/>
+        <id>https://harrylovescode.github.io/gxepd2-with-inland-e-ink-display-154-model/</id>
+
+        <updated>2021-10-17T14:00:38-04:00</updated>
+            <summary>
+                <![CDATA[
+                    Today, I wanted to post a brief article to address some confusion I had when setting up my new Inland E-Ink Display. The&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                <p>Today, I wanted to post a brief article to address some confusion I had when setting up my new Inland E-Ink Display. The link to the specific screen module can be found <a href="https://www.microcenter.com/product/632695/inland-154-inch-e-ink-lcd-display-screen" target="_blank" rel="noopener noreferrer">here</a>.</p>
+<h2>Requirements</h2>
+<p>You will need a handful of things to get started. Most boards will suffice, but I am using a <a href="https://www.adafruit.com/product/2821" target="_blank" rel="noopener noreferrer">Feather Huzzah ESP8266</a>.</p>
+<ul>
+<li>Platform.io Visual Studio Code Extension</li>
+<li>ESP8266 Board of your choice</li>
+<li>Inland 1.54" E-Ink Display</li>
+</ul>
+<h2>Diagram of Board</h2>
+<figure class="post__image post__image--wide"><img loading="lazy"  src="https://harrylovescode.github.io/media/posts/2/inland-board.jpg" sizes="(max-width: 48em) 100vw, 768px" srcset="https://harrylovescode.github.io/media/posts/2/responsive/inland-board-xs.jpg 300w ,https://harrylovescode.github.io/media/posts/2/responsive/inland-board-sm.jpg 480w ,https://harrylovescode.github.io/media/posts/2/responsive/inland-board-md.jpg 768w ,https://harrylovescode.github.io/media/posts/2/responsive/inland-board-lg.jpg 1024w ,https://harrylovescode.github.io/media/posts/2/responsive/inland-board-xl.jpg 1360w ,https://harrylovescode.github.io/media/posts/2/responsive/inland-board-2xl.jpg 1600w"  alt="" width="1000" height="1000"></figure>
+<h2>My Wiring Suggestion</h2>
+<ul>
+<li><strong>BUSY</strong> -&gt; GPIO 04 (I have seen others use GPIO 03, just make sure you map this correctly later)</li>
+<li><strong>RST</strong> -&gt; GPIO 15</li>
+<li><strong>D/C</strong> -&gt; GPIO 02</li>
+<li><strong>CS</strong> -&gt; GPIO 0</li>
+<li><strong>CLK</strong> -&gt; GPIO 14</li>
+<li><strong>SD1</strong> -&gt; GPIO 13</li>
+<li><strong>GND</strong> -&gt; GND</li>
+<li><strong>VCC</strong> -&gt; 3.3V</li>
+</ul>
+<h2>Board Definition</h2>
+<p>This is the part I had the most issue with. The board was wired correctly, but for whatever reason nothing was appearing on the screen. I knew based on the specifications for the board, the resolution was 200x200 and the screen size was 1.54". That's about it. </p>
+<p>Unfortunately, if you bought the board, you won't find any information on the MicroCenter page either. Time for experimentation!</p>
+<p>There are a handful of existing configurations available in the <code>GxEPD2/src/epd</code> folder. Namely:</p>
+<ul>
+<li><strong>GxEPD2_154_D67</strong></li>
+<li>GxEPD2_154_M09</li>
+<li>GxEPD2_154_M10</li>
+<li>GxEPD2_154_T8</li>
+<li>GxEPD2_154</li>
+</ul>
+<p>After an hour of attempting to use <strong>GxEPD2_154</strong>, I nearly gave up. Nothing was drawing to the screen. Thus, I tried a couple of others and, surprisingly, the first one listed worked!</p>
+<h2>Why?</h2>
+<p>There are a couple of reasons I have seen why the generic <strong>GxEPD2_154</strong> definition does not work. I noticed the initial line in the <code>_PowerOn</code> method writes <code>0xc0</code> where as the other definition writes <code>0xf8</code>. Modifying this value leads to an initial screen flash, but not much more. There are a number of changes in the Git Diff <a href="https://www.diffchecker.com/6c0n94tt" target="_blank" rel="noopener noreferrer">here</a>.</p>
+<h2>Board Definition</h2>
+<div>
+<pre>#include &lt;GxEPD2_BW.h&gt;<br><br>/* Other includes and variables here... */<br><br>GxEPD2_BW&lt;GxEPD2_154, GxEPD2_154::HEIGHT&gt; display(<br>    GxEPD2_154(/* CS */ 0,<br>               /* DC */ 2,<br>               /* RST */ 15,<br>               /* BUSY */ 4));</pre>
+<h2>Notes (for Images)</h2>
+<p>I <strong>highly</strong> recommend using this tool if you plan on displaying images on the e-ink display: <a href="I recommend using: https:/javl.github.io/image2cpp/" target="_blank" rel="noopener noreferrer">image2cpp</a>.</p>
+<div>
+<ul>
+<li> Images need to have their resolution set precisely.</li>
+<li>Background-color should be set to "black"</li>
+<li>Images should be inverted.</li>
+</ul>
+</div>
+</div>
+            ]]>
+        </content>
+    </entry>
+</feed>

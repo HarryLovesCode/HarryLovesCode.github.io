@@ -1,2 +1,3 @@
 User-agent: *
 Disallow:
+Sitemap: https://harrylovescode.github.io/sitemap.xml

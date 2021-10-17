@@ -1,0 +1,27 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "BrainDump.exe",
+    "description": "",
+    "home_page_url": "https://harrylovescode.github.io",
+    "feed_url": "https://harrylovescode.github.io/feed.json",
+    "user_comment": "",
+    "author": {
+        "name": "Harry Gould"
+    },
+    "items": [
+        {
+            "id": "https://harrylovescode.github.io/gxepd2-with-inland-e-ink-display-154-model/",
+            "url": "https://harrylovescode.github.io/gxepd2-with-inland-e-ink-display-154-model/",
+            "title": "GxEPD2 with Inland E-Ink Display (1.54&quot; Model)",
+            "summary": "Today, I wanted to post a brief article to address some confusion I had when setting up my new Inland E-Ink Display. The&hellip;",
+            "content_html": "<p>Today, I wanted to post a brief article to address some confusion I had when setting up my new Inland E-Ink Display. The link to the specific screen module can be found <a href=\"https://www.microcenter.com/product/632695/inland-154-inch-e-ink-lcd-display-screen\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.</p>\n<h2>Requirements</h2>\n<p>You will need a handful of things to get started. Most boards will suffice, but I am using a <a href=\"https://www.adafruit.com/product/2821\" target=\"_blank\" rel=\"noopener noreferrer\">Feather Huzzah ESP8266</a>.</p>\n<ul>\n<li>Platform.io Visual Studio Code Extension</li>\n<li>ESP8266 Board of your choice</li>\n<li>Inland 1.54\" E-Ink Display</li>\n</ul>\n<h2>Diagram of Board</h2>\n<figure class=\"post__image post__image--wide\"><img loading=\"lazy\"  src=\"https://harrylovescode.github.io/media/posts/2/inland-board.jpg\" sizes=\"(max-width: 48em) 100vw, 768px\" srcset=\"https://harrylovescode.github.io/media/posts/2/responsive/inland-board-xs.jpg 300w ,https://harrylovescode.github.io/media/posts/2/responsive/inland-board-sm.jpg 480w ,https://harrylovescode.github.io/media/posts/2/responsive/inland-board-md.jpg 768w ,https://harrylovescode.github.io/media/posts/2/responsive/inland-board-lg.jpg 1024w ,https://harrylovescode.github.io/media/posts/2/responsive/inland-board-xl.jpg 1360w ,https://harrylovescode.github.io/media/posts/2/responsive/inland-board-2xl.jpg 1600w\"  alt=\"\" width=\"1000\" height=\"1000\"></figure>\n<h2>My Wiring Suggestion</h2>\n<ul>\n<li><strong>BUSY</strong> -&gt; GPIO 04 (I have seen others use GPIO 03, just make sure you map this correctly later)</li>\n<li><strong>RST</strong> -&gt; GPIO 15</li>\n<li><strong>D/C</strong> -&gt; GPIO 02</li>\n<li><strong>CS</strong> -&gt; GPIO 0</li>\n<li><strong>CLK</strong> -&gt; GPIO 14</li>\n<li><strong>SD1</strong> -&gt; GPIO 13</li>\n<li><strong>GND</strong> -&gt; GND</li>\n<li><strong>VCC</strong> -&gt; 3.3V</li>\n</ul>\n<h2>Board Definition</h2>\n<p>This is the part I had the most issue with. The board was wired correctly, but for whatever reason nothing was appearing on the screen. I knew based on the specifications for the board, the resolution was 200x200 and the screen size was 1.54\". That's about it. </p>\n<p>Unfortunately, if you bought the board, you won't find any information on the MicroCenter page either. Time for experimentation!</p>\n<p>There are a handful of existing configurations available in the <code>GxEPD2/src/epd</code> folder. Namely:</p>\n<ul>\n<li><strong>GxEPD2_154_D67</strong></li>\n<li>GxEPD2_154_M09</li>\n<li>GxEPD2_154_M10</li>\n<li>GxEPD2_154_T8</li>\n<li>GxEPD2_154</li>\n</ul>\n<p>After an hour of attempting to use <strong>GxEPD2_154</strong>, I nearly gave up. Nothing was drawing to the screen. Thus, I tried a couple of others and, surprisingly, the first one listed worked!</p>\n<h2>Why?</h2>\n<p>There are a couple of reasons I have seen why the generic <strong>GxEPD2_154</strong> definition does not work. I noticed the initial line in the <code>_PowerOn</code> method writes <code>0xc0</code> where as the other definition writes <code>0xf8</code>. Modifying this value leads to an initial screen flash, but not much more. There are a number of changes in the Git Diff <a href=\"https://www.diffchecker.com/6c0n94tt\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.</p>\n<h2>Board Definition</h2>\n<div>\n<pre>#include &lt;GxEPD2_BW.h&gt;<br><br>/* Other includes and variables here... */<br><br>GxEPD2_BW&lt;GxEPD2_154, GxEPD2_154::HEIGHT&gt; display(<br>    GxEPD2_154(/* CS */ 0,<br>               /* DC */ 2,<br>               /* RST */ 15,<br>               /* BUSY */ 4));</pre>\n<h2>Notes (for Images)</h2>\n<p>I <strong>highly</strong> recommend using this tool if you plan on displaying images on the e-ink display: <a href=\"I recommend using: https:/javl.github.io/image2cpp/\" target=\"_blank\" rel=\"noopener noreferrer\">image2cpp</a>.</p>\n<div>\n<ul>\n<li> Images need to have their resolution set precisely.</li>\n<li>Background-color should be set to \"black\"</li>\n<li>Images should be inverted.</li>\n</ul>\n</div>\n</div>",
+            "author": {
+                "name": "Harry Gould"
+            },
+            "tags": [
+            ],
+            "date_published": "2021-10-17T13:54:47-04:00",
+            "date_modified": "2021-10-17T14:00:38-04:00"
+        }
+    ]
+}
